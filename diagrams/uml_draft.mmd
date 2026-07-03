@@ -1,0 +1,36 @@
+classDiagram
+    class Owner {
+        +int id
+        +String name
+        +addPet(pet) void
+        +createTask(task) Task
+    }
+
+    class Pet {
+        +int id
+        +String name
+        +String breed
+        +int age
+        +String species
+        +getTasks() Task[]
+        +getOwners() Owner[]
+    }
+
+    class Task {
+        +int id
+        +int petId
+        +int ownerId
+        +String taskKind
+        +String type
+        +String priority
+        +int duration
+        +String status
+        +DateTime scheduledAt
+        +markDone() void
+        +isPending() bool
+        +isShared() bool
+    }
+
+    Owner "*" -- "*" Pet : has
+    Pet "1" --> "*" Task : has
+    Owner "1" --> "0..*" Task : creates
