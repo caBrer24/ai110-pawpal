@@ -1,9 +1,38 @@
 classDiagram
+    class TaskKind {
+        <<enumeration>>
+        PERSONAL
+        EVENT
+    }
+
+    class ActivityType {
+        <<enumeration>>
+        WALK
+        BATH
+        GROOMING
+        VET_VISIT
+    }
+
+    class TaskPriority {
+        <<enumeration>>
+        LOW
+        MEDIUM
+        HIGH
+    }
+
+    class TaskStatus {
+        <<enumeration>>
+        PENDING
+        DONE
+    }
+
     class Owner {
         +int id
         +String name
-        +addPet(pet) void
-        +createTask(task) Task
+        +list pet_ids
+        +list task_ids
+        +add_pet(pet_id) void
+        +create_task(task) Task
     }
 
     class Pet {
@@ -12,25 +41,27 @@ classDiagram
         +String breed
         +int age
         +String species
-        +getTasks() Task[]
-        +getOwners() Owner[]
+        +list owner_ids
+        +list task_ids
+        +get_tasks() list
+        +get_owners() list
     }
 
     class Task {
         +int id
-        +int petId
-        +int ownerId
-        +String taskKind
-        +String type
-        +String priority
-        +int duration
-        +String status
-        +DateTime scheduledAt
-        +markDone() void
-        +isPending() bool
-        +isShared() bool
+        +int pet_id
+        +TaskKind task_kind
+        +ActivityType activity
+        +TaskPriority priority
+        +int duration_minutes
+        +TaskStatus status
+        +DateTime scheduled_at
+        +int owner_id
+        +mark_done() void
+        +is_pending() bool
+        +is_shared() bool
     }
 
     Owner "*" -- "*" Pet : has
     Pet "1" --> "*" Task : has
-    Owner "1" --> "0..*" Task : creates
+    Owner "1" --> "0..*" Task : has

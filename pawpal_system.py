@@ -1,15 +1,40 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+from enum import Enum
 from typing import Optional
+
+
+class TaskKind(Enum):
+    PERSONAL = "personal"
+    EVENT = "event"
+
+
+class ActivityType(Enum):
+    WALK = "walk"
+    BATH = "bath"
+    GROOMING = "grooming"
+    VET_VISIT = "vet_visit"
+
+
+class TaskPriority(Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+
+
+class TaskStatus(Enum):
+    PENDING = "pending"
+    DONE = "done"
 
 
 @dataclass
 class Owner:
     id: int
     name: str
-    pets: list["Pet"] = field(default_factory=list)
+    pet_ids: list[int] = field(default_factory=list)
+    task_ids: list[int] = field(default_factory=list)
 
-    def add_pet(self, pet: "Pet") -> None:
+    def add_pet(self, pet_id: int) -> None:
         pass
 
     def create_task(self, task: "Task") -> "Task":
@@ -23,6 +48,8 @@ class Pet:
     breed: str
     age: int
     species: str
+    owner_ids: list[int] = field(default_factory=list)
+    task_ids: list[int] = field(default_factory=list)
 
     def get_tasks(self) -> list["Task"]:
         pass
@@ -35,13 +62,13 @@ class Pet:
 class Task:
     id: int
     pet_id: int
-    task_kind: str  # "personal" or "event"
-    type: str
-    priority: str
-    duration: int
-    status: str
+    task_kind: TaskKind
+    activity: ActivityType
+    priority: TaskPriority
+    duration_minutes: int
+    status: TaskStatus
     scheduled_at: datetime
-    owner_id: Optional[int] = None  # null when task_kind is "event"
+    owner_id: Optional[int] = None  # null when task_kind is EVENT
 
     def mark_done(self) -> None:
         pass
