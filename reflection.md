@@ -21,8 +21,7 @@ Responsibilities: To add pets, to create tasks
 
 **b. Design changes**
 
-- Did your design change during implementation?
-- If yes, describe at least one change and why you made it.
+Yes. Scheduler wasn't in the original design, it came in later as a way to store and access all the data in one place. Owner almost got cut since this started as a single-user app, but a scenario where two people share a pet made it worth keeping.
 
 ---
 
@@ -30,14 +29,11 @@ Responsibilities: To add pets, to create tasks
 
 **a. Constraints and priorities**
 
-- What constraints does your scheduler consider (for example: time, priority, preferences)?
-- How did you decide which constraints mattered most?
+Time of day, task duration, and priority. Time mattered most since the whole point is a daily schedule and knowing what to do when. Priority is visible but doesn't block anything, it's more of a heads-up for the owner.
 
 **b. Tradeoffs**
 
-- Describe one tradeoff your scheduler makes.
-- Why is that tradeoff reasonable for this scenario?
-   
+Conflict detection only checks tasks for the same pet, not across pets. So if two pets have tasks at the same time, no warning shows. That's fine for now since one pet at a time is the more common scenario and cross-pet conflicts are a next iteration.
 ---
 
 ## 3. AI Collaboration
@@ -58,13 +54,11 @@ Initially I would just follow and try out the suggestions, but it was frustratin
 
 **a. What you tested**
 
-- What behaviors did you test?
-- Why were these tests important?
+Sorting, recurring task creation, conflict detection, filtering, and edge cases like scheduling a task in the past or marking an unknown task complete. These matter because they're where the logic could silently produce wrong results without crashing.
 
 **b. Confidence**
 
-- How confident are you that your scheduler works correctly?
-- What edge cases would you test next if you had more time?
+Pretty confident for the scenarios it was built for. Next I'd test what happens when the same task gets marked complete twice, and what happens when two owners add conflicting tasks for the same shared pet.
 
 ---
 
