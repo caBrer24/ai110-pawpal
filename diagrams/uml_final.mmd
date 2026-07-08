@@ -77,9 +77,13 @@ classDiagram
         +dict tasks
         +add_owner(owner) void
         +add_pet(pet, owner_id) void
-        +add_task(task) void
+        +add_task(task) String
         +get_tasks_for_pet(pet_id) list
         +get_todays_schedule(owner_id) list
+        +sort_by_time(tasks) list
+        +filter_tasks(tasks, pet_id, status) list
+        +get_conflicts(tasks) list
+        +mark_task_complete(task_id) Task
     }
 
     Owner "*" -- "*" Pet : has
